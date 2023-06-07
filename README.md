@@ -6,14 +6,10 @@
 Сервис кинопоиск. Поиск фильмов с возможностью их сохранения.
 # Технологии
 
-NodeJS
-
-Express
-
-MongoDB
-
-Nginx
-
+NodeJS,
+Express,
+MongoDB,
+Nginx,
 ESlint
 # Ссылки на проект
 
