@@ -7,12 +7,12 @@ const NotFoundError = require('../middlewares/errors/not-found-err');
 const { validationSignup, validationSignin } = require('../middlewares/validation');
 
 router.post('/signup', validationSignup, createUser);
-
 router.post('/signin', validationSignin, login);
 
-router.use('/users', auth, userRouter);
+router.use(auth);
 
-router.use('/movies', auth, movieRouter);
+router.use('/users', userRouter);
+router.use('/movies', movieRouter);
 
 router.use((req, res, next) => {
   next(new NotFoundError('Стараница по указанному маршруту не найдена'));
