@@ -46,7 +46,7 @@ const createMovie = (req, res, next) => {
     .then((movie) => res.status(201).send(movie))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        next(new BadRequestError('Переданы некорректные данные при создании карточки'));
+        next(new BadRequestError('Переданы некорректные данные при создании карточки фильма'));
       } else {
         next(err);
       }
@@ -55,16 +55,16 @@ const createMovie = (req, res, next) => {
 
 // DELETE /movies/:cardId — удаляет сохранённый фильм по id
 const deleteMovie = (req, res, next) => {
-  Movie.findById(req.params.cardId)
-    .orFail(() => next(new NotFoundError(`Карточка с _id ${req.params.cardId} не найдена`)))
+  Movie.findById(req.params.movieId)
+    .orFail(() => next(new NotFoundError(`Карточка с _id ${req.params.movieId} не найдена`)))
     .populate('owner')
     .then((movie) => {
       if (movie.owner._id.toString() === req.user._id) {
         return Movie.deleteOne(movie)
-          .then(() => res.send({ data: movie, message: 'Карточка успешно удалена' }));
+          .then(() => res.send({ data: movie, message: 'Фильм успешно удален' }));
       }
       // пользователь не может удалить карточку, которую он не создавал
-      return next(new ForbiddenError('Нельзя удалить чужую карточку'));
+      return next(new ForbiddenError('Нельзя удалить чужой сохранённый фильм'));
     })
     .catch((err) => {
       if (err.name === 'CastError') {
