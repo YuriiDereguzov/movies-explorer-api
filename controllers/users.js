@@ -19,25 +19,24 @@ const getCurrentUser = (req, res, next) => {
 
 // PATCH /users/me — обновляет профиль
 const updateUserProfile = (req, res, next) => {
-  // const { name, about } = req.body;
   const { name, email } = req.body;
   User.findByIdAndUpdate(
     req.user._id,
-    // { name, about },
     { name, email },
     { new: true, runValidators: true },
   )
     .then((user) => {
       if (user) {
-        // res.send(user);
         res.send({ name, email });
       } else {
         next(new NotFoundError('Пользователь по указанному _id не найден'));
       }
     })
     .catch((err) => {
-      if (err.name === 'ValidationError') {
-        next(new BadRequestError('Переданы некорректные данные при обновлении профиля'));
+      if (err.code === 11000) {
+        next(new ConflictError('пользователь с таким Email уже существует'));
+      } else if (err.name === 'ValidationError') {
+        next(new BadRequestError('Переданы некорректные данные при создании пользователя.'));
       } else {
         next(err);
       }
