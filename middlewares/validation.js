@@ -17,7 +17,6 @@ const validationSignin = celebrate({
 
 const validationCreateMovie = celebrate({
   body: Joi.object().keys({
-    movieId: Joi.number().integer().required(),
     country: Joi.string().required(),
     director: Joi.string().required(),
     duration: Joi.number().required(),
@@ -26,6 +25,7 @@ const validationCreateMovie = celebrate({
     image: Joi.string().uri().required().pattern(/(https?:\/\/)(w{3}\.)?(([a-zA-Z0-9]+).)+/),
     trailerLink: Joi.string().required().pattern(/(https?:\/\/)(w{3}\.)?(([a-zA-Z0-9]+).)+/),
     thumbnail: Joi.string().uri().required().pattern(/(https?:\/\/)(w{3}\.)?(([a-zA-Z0-9]+).)+/),
+    movieId: Joi.number().integer().required(),
     nameRU: Joi.string().required(),
     nameEN: Joi.string().required(),
   }),
