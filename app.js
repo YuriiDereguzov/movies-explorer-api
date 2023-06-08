@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
 const cors = require('cors');
+const { DB_ADDRESS } = require('./config');
 const routes = require('./routes');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const errorHandler = require('./middlewares/errors/errorHandler');
@@ -14,7 +15,7 @@ app.use(cors());
 // app.use(cors({ origin: ['http://localhost:3001', 'https://projects.nomoredomains.monster'] }));
 
 // подключаемся к серверу mongo
-mongoose.connect('mongodb://127.0.0.1:27017/bitfilmsdb', {});
+mongoose.connect(DB_ADDRESS, {});
 
 app.use(requestLogger); // подключаем логгер запросов
 app.use(express.json());
