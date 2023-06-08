@@ -56,7 +56,7 @@ const createMovie = (req, res, next) => {
 // DELETE /movies/:cardId — удаляет сохранённый фильм по id
 const deleteMovie = (req, res, next) => {
   Movie.findById(req.params.movieId)
-    .orFail(() => next(new NotFoundError(`Карточка с _id ${req.params.movieId} не найдена`)))
+    .orFail(new NotFoundError(`Карточка с _id ${req.params.movieId} не найдена`))
     .populate('owner')
     .then((movie) => {
       if (movie.owner._id.toString() === req.user._id) {
