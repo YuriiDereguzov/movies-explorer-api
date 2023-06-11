@@ -6,8 +6,7 @@ const ForbiddenError = require('../middlewares/errors/forbidden-err');
 
 // GET /movies — возвращает все сохранённые текущим пользователем фильмы
 const getMovies = (req, res, next) => {
-  Movie.find({})
-    .populate(['owner'])
+  Movie.find({ owner: req.user._id })
     .then((movies) => res.send(movies))
     .catch(next);
 };
